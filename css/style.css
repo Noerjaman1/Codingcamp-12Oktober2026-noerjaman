@@ -1,0 +1,667 @@
+/* =============================================================
+   Life Dashboard — style.css
+   Single stylesheet for all components + both themes
+   ============================================================= */
+
+/* ── 1. CSS Custom Properties (Design Tokens) ─────────────── */
+:root {
+  /* Light theme (default) */
+  --bg:            #f0f2f5;
+  --surface:       #ffffff;
+  --surface-alt:   #f8f9fb;
+  --primary:       #6c63ff;
+  --primary-hover: #574fd6;
+  --primary-light: #ede9ff;
+  --text:          #1a1a2e;
+  --text-muted:    #6b7280;
+  --border:        #e5e7eb;
+  --danger:        #ef4444;
+  --danger-hover:  #dc2626;
+  --success:       #22c55e;
+  --done-text:     #9ca3af;
+  --shadow:        0 2px 12px rgba(0, 0, 0, 0.08);
+  --shadow-md:     0 4px 20px rgba(0, 0, 0, 0.10);
+  --radius:        14px;
+  --radius-sm:     8px;
+  --transition:    0.2s ease;
+}
+
+[data-theme="dark"] {
+  --bg:            #0f0f1a;
+  --surface:       #1a1a2e;
+  --surface-alt:   #24243a;
+  --primary:       #7c73ff;
+  --primary-hover: #6c63ff;
+  --primary-light: #2d2b54;
+  --text:          #e5e7eb;
+  --text-muted:    #9ca3af;
+  --border:        #2d2d44;
+  --danger:        #f87171;
+  --danger-hover:  #ef4444;
+  --success:       #4ade80;
+  --done-text:     #4b5563;
+  --shadow:        0 2px 12px rgba(0, 0, 0, 0.35);
+  --shadow-md:     0 4px 20px rgba(0, 0, 0, 0.45);
+}
+
+/* ── 2. Reset & Base ───────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 1.5rem;
+  transition: background-color var(--transition), color var(--transition);
+  line-height: 1.5;
+}
+
+ul { list-style: none; }
+a  { text-decoration: none; }
+
+/* ── 3. Utility Classes ────────────────────────────────────── */
+.hidden { display: none !important; }
+
+/* ── 4. Buttons ────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.55rem 1.1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition), transform 0.1s ease, box-shadow var(--transition);
+  white-space: nowrap;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+.btn-primary:hover { background-color: var(--primary-hover); }
+
+.btn-secondary {
+  background-color: var(--surface-alt);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background-color: var(--border); }
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.82rem;
+}
+
+.btn-danger {
+  background-color: transparent;
+  color: var(--danger);
+  border: none;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.85rem;
+}
+.btn-danger:hover { color: var(--danger-hover); }
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition);
+  color: var(--text-muted);
+}
+.icon-btn:hover { background-color: var(--primary-light); }
+
+/* ── 5. Cards ──────────────────────────────────────────────── */
+.card {
+  background-color: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: background-color var(--transition), border-color var(--transition);
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+}
+
+/* ── 6. Header Card ────────────────────────────────────────── */
+.header-card {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  color: #ffffff;
+  border-radius: var(--radius);
+  padding: 1.6rem 2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  box-shadow: var(--shadow-md);
+}
+
+.greeting-block { flex: 1; min-width: 180px; }
+
+.greeting-text {
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-bottom: 0.2rem;
+}
+
+.username-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.username-display {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.icon-btn.edit-name {
+  color: rgba(255,255,255,0.7);
+}
+.icon-btn.edit-name:hover {
+  background-color: rgba(255,255,255,0.15);
+  color: #ffffff;
+}
+
+#edit-name-btn {
+  color: rgba(255,255,255,0.75);
+}
+#edit-name-btn:hover {
+  background-color: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.name-editor {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.name-input {
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.8rem;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.9rem;
+  width: 180px;
+  outline: none;
+}
+.name-input::placeholder { color: rgba(255,255,255,0.6); }
+.name-input:focus { border-color: rgba(255,255,255,0.8); }
+
+.clock-block {
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.clock {
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.date-display {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin-top: 0.3rem;
+}
+
+.header-actions { flex: 0 0 auto; }
+
+.theme-toggle {
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition);
+}
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.35);
+  transform: scale(1.05);
+}
+
+/* ── 7. Main Grid ──────────────────────────────────────────── */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: auto auto;
+  gap: 1.5rem;
+}
+
+/* Timer is left column, full height; Todo is right column; Links spans full width */
+.timer-card { grid-column: 1 / 2; grid-row: 1 / 2; }
+.todo-card  { grid-column: 2 / 3; grid-row: 1 / 2; }
+.links-card { grid-column: 1 / 3; grid-row: 2 / 3; }
+
+/* ── 8. Focus Timer ────────────────────────────────────────── */
+.timer-display-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.timer-ring {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: border-color var(--transition);
+}
+
+.timer-ring.running {
+  border-color: var(--primary);
+  animation: pulse-ring 1.5s ease-in-out infinite;
+}
+
+.timer-ring.finished {
+  border-color: var(--success);
+  animation: none;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.25); }
+  50%       { box-shadow: 0 0 0 10px rgba(108, 99, 255, 0); }
+}
+
+.timer-display {
+  font-size: 2.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 2px;
+  color: var(--text);
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+
+.timer-settings { border-top: 1px solid var(--border); padding-top: 1rem; }
+
+.settings-label {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.settings-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.timer-input {
+  width: 80px;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.timer-input:focus { border-color: var(--primary); }
+
+/* ── 9. To-Do List ─────────────────────────────────────────── */
+.todo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.todo-header .card-title { margin-bottom: 0; }
+
+.sort-select {
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.sort-select:focus { border-color: var(--primary); }
+
+.todo-input-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.todo-input:focus { border-color: var(--primary); }
+.todo-input::placeholder { color: var(--text-muted); }
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* scrollbar styling */
+.todo-list::-webkit-scrollbar { width: 5px; }
+.todo-list::-webkit-scrollbar-track { background: transparent; }
+.todo-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  transition: background-color var(--transition), opacity var(--transition);
+  animation: slide-in 0.2s ease;
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.todo-item:hover { border-color: var(--primary); }
+
+.todo-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 0.92rem;
+  color: var(--text);
+  word-break: break-word;
+  transition: color var(--transition);
+}
+
+.todo-item.done .todo-text {
+  text-decoration: line-through;
+  color: var(--done-text);
+}
+
+.todo-actions {
+  display: flex;
+  gap: 0.2rem;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.todo-item:hover .todo-actions { opacity: 1; }
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 1.5rem 0;
+}
+
+/* ── 10. Quick Links ───────────────────────────────────────── */
+.links-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.links-header .card-title { margin-bottom: 0; }
+
+.links-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.link-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  background: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid transparent;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition), color var(--transition), box-shadow var(--transition);
+  text-decoration: none;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.link-pill:hover {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(108, 99, 255, 0.3);
+}
+
+.link-pill-delete {
+  display: none;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  font-size: 0.65rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background-color var(--transition);
+}
+
+.link-pill:hover .link-pill-delete,
+.link-pill-wrapper:hover .link-pill-delete {
+  display: flex;
+}
+
+.link-pill-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.link-pill-wrapper:hover .link-pill-delete { display: flex; }
+
+/* ── 11. Modals ────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fade-in 0.15s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  animation: modal-pop 0.2s ease;
+}
+
+@keyframes modal-pop {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.modal-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: var(--text);
+}
+
+.modal-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+  margin-top: 0.8rem;
+}
+.modal-label:first-of-type { margin-top: 0; }
+
+.modal-input {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.modal-input:focus { border-color: var(--primary); }
+
+.modal-actions {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+/* ── 12. Toast Notification ────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text);
+  color: var(--surface);
+  padding: 0.7rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-md);
+  z-index: 2000;
+  animation: toast-in 0.25s ease;
+  white-space: nowrap;
+  max-width: 90vw;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── 13. Responsive (Mobile ≤ 768px) ───────────────────────── */
+@media (max-width: 768px) {
+  body { padding: 1rem; }
+
+  .header-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.2rem;
+    gap: 0.8rem;
+  }
+
+  .clock-block { text-align: left; }
+  .clock       { font-size: 1.8rem; }
+
+  .header-actions { width: 100%; }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .timer-card { grid-column: 1; grid-row: auto; }
+  .todo-card  { grid-column: 1; grid-row: auto; }
+  .links-card { grid-column: 1; grid-row: auto; }
+
+  .timer-display { font-size: 2rem; }
+  .timer-ring    { width: 130px; height: 130px; }
+}
+
+@media (max-width: 480px) {
+  .todo-header { flex-direction: column; align-items: flex-start; }
+  .timer-controls { gap: 0.4rem; }
+  .btn { padding: 0.5rem 0.85rem; font-size: 0.85rem; }
+}

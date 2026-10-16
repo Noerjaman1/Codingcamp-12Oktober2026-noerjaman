@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER: Greeting + Clock ===== -->
+  <header class="header-card">
+    <div class="greeting-block">
+      <p class="greeting-text" id="greeting-text">Good Morning,</p>
+      <div class="username-row">
+        <h1 class="username-display" id="username-display">Friend</h1>
+        <button class="icon-btn" id="edit-name-btn" aria-label="Edit name" title="Edit name">✏️</button>
+      </div>
+      <!-- Inline name editor (hidden by default) -->
+      <div class="name-editor hidden" id="name-editor">
+        <input type="text" id="name-input" class="name-input" placeholder="Enter your name…" maxlength="30" />
+        <button class="btn btn-primary btn-sm" id="save-name-btn">Save</button>
+      </div>
+    </div>
+
+    <div class="clock-block">
+      <p class="clock" id="clock">00:00:00</p>
+      <p class="date-display" id="date-display">Friday, October 16, 2026</p>
+    </div>
+
+    <div class="header-actions">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle Light/Dark">
+        <span id="theme-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== MAIN GRID ===== -->
+  <main class="main-grid">
+
+    <!-- ===== FOCUS TIMER ===== -->
+    <section class="card timer-card">
+      <h2 class="card-title">⏱ Focus Timer</h2>
+
+      <div class="timer-display-wrap">
+        <div class="timer-ring" id="timer-ring">
+          <span class="timer-display" id="timer-display">25:00</span>
+        </div>
+      </div>
+
+      <div class="timer-controls">
+        <button class="btn btn-primary" id="timer-start">▶ Start</button>
+        <button class="btn btn-secondary" id="timer-stop">⏹ Stop</button>
+        <button class="btn btn-secondary" id="timer-reset">↺ Reset</button>
+      </div>
+
+      <div class="timer-settings">
+        <label for="pomodoro-input" class="settings-label">⚙ Set duration (min):</label>
+        <div class="settings-row">
+          <input type="number" id="pomodoro-input" class="timer-input" min="1" max="120" value="25" />
+          <button class="btn btn-primary btn-sm" id="pomodoro-set-btn">Set</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TO-DO LIST ===== -->
+    <section class="card todo-card">
+      <div class="todo-header">
+        <h2 class="card-title">📝 To-Do List</h2>
+        <select class="sort-select" id="sort-select" aria-label="Sort tasks">
+          <option value="default">Sort: Default</option>
+          <option value="az">Sort: A → Z</option>
+          <option value="active">Sort: Active First</option>
+        </select>
+      </div>
+
+      <div class="todo-input-row">
+        <input type="text" id="todo-input" class="todo-input" placeholder="Add a new task…" maxlength="100" />
+        <button class="btn btn-primary" id="todo-add-btn" aria-label="Add task">+</button>
+      </div>
+
+      <ul class="todo-list" id="todo-list" role="list">
+        <!-- Tasks rendered by JS -->
+      </ul>
+      <p class="empty-state hidden" id="todo-empty">No tasks yet. Add one above! 🎯</p>
+    </section>
+
+    <!-- ===== QUICK LINKS ===== -->
+    <section class="card links-card">
+      <div class="links-header">
+        <h2 class="card-title">🔗 Quick Links</h2>
+        <button class="btn btn-primary btn-sm" id="add-link-btn">+ Add Link</button>
+      </div>
+      <div class="links-grid" id="links-grid">
+        <!-- Link pills rendered by JS -->
+      </div>
+      <p class="empty-state hidden" id="links-empty">No links saved yet. Add some! 🌐</p>
+    </section>
+
+  </main>
+
+  <!-- ===== MODAL: Add / Edit Quick Link ===== -->
+  <div class="modal-overlay hidden" id="link-modal" role="dialog" aria-modal="true" aria-labelledby="link-modal-title">
+    <div class="modal">
+      <h3 class="modal-title" id="link-modal-title">Add Quick Link</h3>
+      <label class="modal-label" for="link-name-input">Name</label>
+      <input type="text" id="link-name-input" class="modal-input" placeholder="e.g. Google" maxlength="30" />
+      <label class="modal-label" for="link-url-input">URL</label>
+      <input type="url" id="link-url-input" class="modal-input" placeholder="https://example.com" />
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="link-modal-cancel">Cancel</button>
+        <button class="btn btn-primary" id="link-modal-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: Edit Task ===== -->
+  <div class="modal-overlay hidden" id="task-modal" role="dialog" aria-modal="true" aria-labelledby="task-modal-title">
+    <div class="modal">
+      <h3 class="modal-title" id="task-modal-title">Edit Task</h3>
+      <label class="modal-label" for="task-edit-input">Task</label>
+      <input type="text" id="task-edit-input" class="modal-input" maxlength="100" />
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="task-modal-cancel">Cancel</button>
+        <button class="btn btn-primary" id="task-modal-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST NOTIFICATION ===== -->
+  <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
